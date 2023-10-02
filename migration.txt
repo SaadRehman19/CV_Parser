@@ -1,0 +1,35 @@
+pip install alembic
+alembic init alembic
+alembic revision -m "Create Table users"
+alembic upgrade head
+alembic downgrade base
+
+
+
+
+from alembic import op
+import sqlalchemy as sa
+
+
+# revision identifiers, used by Alembic.
+revision = '25ba47dc1b73'
+down_revision = None
+branch_labels = None
+depends_on = None
+
+
+def upgrade() -> None:
+    op.create_table(
+        'UserInfo',
+        sa.Column('id', sa.Integer, primary_key=True,autoincrement=True),
+        sa.Column('name', sa.String(50)),
+        sa.Column('email', sa.String(50)),
+        sa.Column('phone', sa.String(35)),
+        sa.Column('summary', sa.String(1500))
+    )
+
+
+def downgrade() -> None:
+    op.drop_table('UserInfo')
+
+mysql+mysqlconnector://root:root@127.0.0.1:42333/Resume
